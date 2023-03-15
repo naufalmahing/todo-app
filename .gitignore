@@ -1,4 +1,9 @@
 .venv
 todo web-server.pem
-*.txt
+functionality.txt
+issues.txt
+milestone.txt
+test.txt
+todo.txt
+wireframe.txt
 bootstrap template
