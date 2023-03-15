@@ -1,0 +1,56 @@
+{% extends "todo/base.html" %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+    <a href="{% url 'todo:create' %}"><button class="btn btn-md btn-success">Create new</button></a>
+    <a href="{% url 'todo:upload' %}"><button class="btn btn-md btn-info">Import Todo</button></a>
+</div>
+
+<br><br>
+
+<ul style="padding-left:0.75rem;">
+    <div class="container">
+        <div class="row">
+            {% if data %}
+            {% for todo in data %}
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card bg-light text-dark mb-4" style="width: 12rem">
+                    <div class="card-body">
+                        <a href="{% url 'todo:detail' todo.id %}"><h5 class="card-title text text-dark">{{todo.todo_title}}</h5></a>
+                        <p class="card-subtitle mb-2">
+                            {% if todo.tags.all %}
+                                {% for tag in todo.tags.all %}
+                                    {{tag.tag_title}}  
+                                {% endfor %}
+                            {% else %}
+                                 <br>
+                            {% endif %}
+                        </p>
+    
+                        <div class="d-flex">
+                            <div class="me-2"><a href="{% url 'todo:update' todo.id %}" class="btn btn-primary btn-sm">Edit</a></div>
+                            <div>
+                                <form action="{% url 'todo:delete' todo.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input class="btn btn-danger btn-sm" type="submit" value="Delete">
+                                </form>
+                            </div>                        
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                <h1>It's empty</h1>
+            {% endif %}
+        </div>
+    </div>
+</ul>
+{% endblock %}

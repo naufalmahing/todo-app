@@ -1,0 +1,29 @@
+{% extends "todo/base.html" %}
+{% block content %}
+<p>
+    {{ data.todo_title }} <br>
+    <ul>
+        {% if data.tags.all %}
+            {% for tag in data.tags.all %}
+                <li>{{ tag }}</li>
+            {% endfor %}
+        {% else %}
+            <li class="opacity-0"> </li>
+        {% endif %}
+    </ul>
+    {% if data.text %}
+        {{ data.text }} 
+    {% else %}
+        <p class="opacity-0">sdfsdf</p>
+    {% endif %}
+</p>
+<div class="d-flex">
+    <a href="{% url 'todo:update' data.id %}" class="btn btn-primary btn-sm me-2">Edit</a>
+    <form action="{% url 'todo:delete' data.id %}" method="post">
+        {% csrf_token %}
+        <input class="btn btn-danger btn-sm me-2" type="submit" value="Delete">
+    </form>
+<a href="{% url 'todo:index' %}" class="btn btn-secondary btn-sm">Back</a>
+</div>
+
+{% endblock %}
